@@ -1,0 +1,22 @@
+<% title "Products" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Brand</th>
+    <th>Color</th>
+    <th>Image</th>
+    <th>Categories</th>
+  </tr>
+  <% for product in @products %>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= product.brand %></td>
+      <td><%= product.color %></td>
+      <td><%= product.image %></td>
+      <td><%= product.categories %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Product", new_product_path %></p>
