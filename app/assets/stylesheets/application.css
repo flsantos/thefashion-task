@@ -73,3 +73,23 @@ a {
 .error_messages ul {
   margin: 0;
 }
+
+
+select {
+	width: 350px;
+	height: 25px;
+}
+
+.products {
+	margin-top: 50px;
+	overflow:hidden;
+}
+.product {
+    display:block;
+    position: relative;
+    margin: 5px;
+    float:left;
+    width: calc(25% - 10px);
+    height:400px;
+    margin-bottom: 100px;
+}

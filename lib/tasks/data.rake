@@ -16,9 +16,9 @@ namespace :data do
     previous = ""
     last_cat = ""
     categories.each do |subc|
-      c = find_or_create(subc)
+      c = find_or_create(subc.strip)
       if !previous.empty?
-        aux = find_or_create(previous)
+        aux = find_or_create(previous.strip)
         c.parent_category=aux
         aux.subcategories << c
       end
@@ -51,11 +51,12 @@ namespace :data do
         categories << parse_category(cat)
       end
       p = Product.new
-      p.name = attrs[0]
-      p.brand = attrs[1]
+      p.name = attrs[0].strip
+      p.brand = attrs[1].strip
       p.categories = categories
-      p.color = attrs[3]
-      p.image = attrs[4]
+      p.category_text = attrs[2].strip
+      p.color = attrs[3].strip
+      p.image = attrs[4].strip
       p.save!
       
     end

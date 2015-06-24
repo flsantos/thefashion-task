@@ -1,22 +1,55 @@
-<% title "Products" %>
+<% title "The Fashion - Products" %>
+<div align="center">
+<%= form_tag({:controller => "products", :action => "search"}, :method => "get") do%>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Brand</th>
-    <th>Color</th>
-    <th>Image</th>
-    <th>Categories</th>
-  </tr>
-  <% for product in @products %>
-    <tr>
-      <td><%= product.name %></td>
-      <td><%= product.brand %></td>
-      <td><%= product.color %></td>
-      <td><%= product.image %></td>
-      <td><%= product.categories %></td>
-    </tr>
+
+  <div class="field">
+    <%= label_tag :category %><br />
+    <%= select_tag :category, options_for_select(@categories), include_blank: true %>
+  </div>
+    <br/>
+  <div class="field">
+    <%= label_tag :brand %><br />
+    <%= select_tag :brand, options_for_select(@brands), include_blank: true, :width => "150px;" %>
+  </div>
+  
+  <% if false %>
+  <!------
+  <div class="field">
+    <%= f.label :category %><br />
+    <%= f.text_field :category %>
+  </div>
+  <div class="field">
+    <%= f.label :color %><br />
+    <%= f.text_field :color %>
+  </div>
+  <div class="field">
+    <%= f.label :image %><br />
+    <%= f.text_field :image %>
+  </div>-->
+  
   <% end %>
-</table>
+  <br/>
+  <div class="actions">
+    <%= submit_tag "Search products" %>
+  </div>
+<% end %>
+</div>
 
-<p><%= link_to "New Product", new_product_path %></p>
+
+
+<% if @products %>
+<div align="center"><p><%= @products.size%> products found</p></div>
+<div class="products">  
+	  <% for product in @products %>
+	    <div class="product">
+	      <p align="center"><strong><%= product.name %></strong></p>
+	      <p align="center"><%= image_tag product.image, size: "250x250" %></p>
+	      <p align="center">Brand: <strong><%= product.brand %></strong> <br/>
+	      Color: <strong><%= product.color %></strong><br/>
+	      Category: <strong><%= product.category_text %></strong></p>
+	    </div>
+	  <% end %>
+
+</div>
+<% end %>
