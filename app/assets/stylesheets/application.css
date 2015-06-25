@@ -80,6 +80,11 @@ select {
 	height: 25px;
 }
 
+#button { 
+	width: 200px;
+	height: 30px;
+}
+
 #description {
 	width: 350px;
 	height: 20px;

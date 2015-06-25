@@ -15,7 +15,7 @@
     <br/>
     <br/>
   <div class="field">
-    <%= label_tag :description, "Or type some search terms: <br/> eg. 'alexander wang short dress'".html_safe %><br />
+    <%= label_tag :description, "Or type some search terms: <br/> eg. 'emporio armani bracelets'".html_safe %><br />
     <%= text_field_tag :description, '', :id => "description" %>
   </div>
   
@@ -37,7 +37,7 @@
   <% end %>
   <br/>
   <div class="actions">
-    <%= submit_tag "Search products" %>
+    <%= submit_tag "Search products", :id => "button" %>
   </div>
 <% end %>
 </div>
@@ -45,6 +45,8 @@
 
 
 <% if @products %>
+<br/>
+<div align="center"><%= link_to 'New search', '/products'%></div>
 <div align="center"><p><%= @products.size%> products found</p></div>
 <div class="products">  
 	  <% for product in @products %>

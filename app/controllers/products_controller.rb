@@ -8,8 +8,14 @@ class ProductsController < ApplicationController
   
   def search
     @products = [] 
+    @brand = ""
+    @category = ""
+    
     if !params[:description].empty?
-        @products = find_products_by_free_text(params[:description])
+        results = find_products_by_free_text(params[:description])
+        @products = results[:products]
+        @brand = results[:brand]
+        @category = results[:category] 
     else
       if !params[:brand].empty? and !params[:category].empty?
         @products = Product.where("brand = ? and category_text like ?", params[:brand], "%#{params[:category]}%")
@@ -17,10 +23,10 @@ class ProductsController < ApplicationController
         @products = Product.where("category_text like ?", "%#{params[:category]}%") if !params[:category].empty?
         @products = Product.where("brand = ?", params[:brand]) if !params[:brand].empty?
       end  
+      @brand = params[:brand]
+      @category = params[:category]
     end
     
-    @brand = params[:brand]
-    @category = params[:category]
     
     @brands = Product.unique_brands
     @categories = Category.categories_list
@@ -54,13 +60,23 @@ class ProductsController < ApplicationController
     else
       where_clause += " brand = '#{brand_found}' " if !brand_found.nil?
     end
-    where_clause += " AND " if !brand_found.nil? and !category_found.nil? 
+    where_clause += " AND " if (!brand_found.nil? or possible_brands.size > 1) and !category_found.nil? 
     where_clause += " category_text like '#{Category.find_by_name(category_found).self_and_ascendents_list_string}%' " if !category_found.nil?
-    where_clause += " AND " if (!brand_found.nil? or possible_brands.size > 1 or !category_found.nil? ) and !name_arg.empty?
+    where_clause += " AND " if (!brand_found.nil? or possible_brands.size > 1 or !category_found.nil?) and !name_arg.empty?
     where_clause += " ( " + name_arg.split(" ").collect {|word| " name like '%#{word}%' "}.join(" AND ") + " ) " if name_arg.split(" ").size > 0
-     
     
-    Product.where(where_clause)
+    
+    #task-4
+    brand = ""
+    if (!brand_found.nil? and name_arg.empty?)
+      brand = brand_found
+    end
+    category = ""
+    if (!category_found.nil? and name_arg.empty?)
+      category = Category.find_by_name(category_found).self_and_ascendents_list_string
+    end
+        
+    return {:products => Product.where(where_clause), :brand => brand, :category => category}
   end
 
 end
