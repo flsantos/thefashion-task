@@ -5,12 +5,18 @@
 
   <div class="field">
     <%= label_tag :category %><br />
-    <%= select_tag :category, options_for_select(@categories), include_blank: true %>
+    <%= select_tag :category, options_for_select(@categories, (@category.nil? ? "" : @category) ), include_blank: true %>
   </div>
     <br/>
   <div class="field">
     <%= label_tag :brand %><br />
-    <%= select_tag :brand, options_for_select(@brands), include_blank: true, :width => "150px;" %>
+    <%= select_tag :brand, options_for_select(@brands, (@brand.nil? ? "" : @brand)), include_blank: true %>
+  </div>
+    <br/>
+    <br/>
+  <div class="field">
+    <%= label_tag :description, "Or type some search terms: <br/> eg. 'alexander wang short dress'".html_safe %><br />
+    <%= text_field_tag :description, '', :id => "description" %>
   </div>
   
   <% if false %>

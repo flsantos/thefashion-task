@@ -80,6 +80,11 @@ select {
 	height: 25px;
 }
 
+#description {
+	width: 350px;
+	height: 20px;
+}
+
 .products {
 	margin-top: 50px;
 	overflow:hidden;

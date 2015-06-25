@@ -1,11 +1,12 @@
 # encoding: UTF-8
 namespace :data do
   
-  def find_or_create(category)
+  def find_or_create(category, level)
     c = Category.find_by_name(category)
     if c == nil
       c = Category.new
       c.name=category
+      c.level = level
       c.save!
     end
     return c
@@ -15,13 +16,15 @@ namespace :data do
     categories = category.split("/")
     previous = ""
     last_cat = ""
+    level = 0
     categories.each do |subc|
-      c = find_or_create(subc.strip)
+      c = find_or_create(subc.strip, level)
       if !previous.empty?
-        aux = find_or_create(previous.strip)
+        aux = find_or_create(previous.strip, level)
         c.parent_category=aux
         aux.subcategories << c
       end
+      level = level + 1
       previous = c.name
       last_cat = c
     end
